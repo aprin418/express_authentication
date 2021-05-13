@@ -10,4 +10,14 @@ router.get("/login", (req, res) => {
   res.render("auth/login");
 });
 
+router.post(
+  "/login",
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/auth/login",
+    successFlash: "Welcome back!",
+    failureFlash: "Email or password is incorrect, try again",
+  })
+);
+
 module.exports = router;
