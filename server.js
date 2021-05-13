@@ -4,6 +4,7 @@ const layouts = require("express-ejs-layouts");
 const app = express();
 const session = require("express-session");
 const flash = require("connect-flash");
+const passport = require("./config/ppConfig");
 
 const SECRET_SESSION = process.env.SECRET_SESSION;
 
@@ -25,6 +26,9 @@ app.use((req, res, next) => {
   res.locals.currentUser = req.user;
   next();
 });
+
+app.use(passport.initialize()); // Initialize passport
+app.use(passport.session()); // Add a session
 
 app.use(require("morgan")("dev"));
 app.use(express.urlencoded({ extended: false }));
