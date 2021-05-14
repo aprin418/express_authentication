@@ -40,11 +40,17 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-app.get("/profile", (req, res) => {
-  res.render("profile");
-});
+// app.get("/profile", (req, res) => {
+//   res.render("profile");
+// });
 
 app.use("/auth", require("./controllers/auth"));
+
+// Add this below /auth controllers
+app.get("/profile", isLoggedIn, (req, res) => {
+  const { id, name, email } = req.user.get();
+  res.render("profile", { id, name, email });
+});
 
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => {
